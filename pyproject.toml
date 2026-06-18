@@ -22,7 +22,6 @@ lint = [
     "ruff (>=0.15.17,<0.16.0)",
     "mypy (>=2.1.0,<3.0.0)",
     "flake8 (>=7.3.0,<8.0.0)",
-    "flake8-pyproject (>=1.2.4,<2.0.0)"
 ]
 dev = [
     "pytest (>=9.1.0,<10.0.0)",
@@ -118,8 +117,3 @@ warn_return_any = true
 exclude = ["venv", "__pycache__"]
 mypy_path = "src" # Путь к папке с локальными модулями для импортов
 explicit_package_bases = true # Позволяет запускать mypy для папки src/ без конфликтов имён модулей
-
-[tool.flake8]
-max-line-length = 119
-ignore = ["E203", "W503"]
-exclude = [".git", "__pycache__", "venv", ".venv"]

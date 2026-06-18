@@ -2,12 +2,29 @@ from typing import ClassVar
 
 
 class Product:
+    """Модель продукта магазина.
+
+    Атрибуты:
+        name (str): Название товара.
+        description (str): Краткое описание товара.
+        price (int | float): Цена товара (в целых или дробных единицах).
+        quantity (int): Количество товара на складе.
+    """
+
     name: str
     description: str
     price: int | float
     quantity: int
 
-    def __init__(self, name, description, price, quantity) -> None:
+    def __init__(self, name: str, description: str, price: int | float, quantity: int) -> None:
+        """Инициализирует экземпляр `Product`.
+
+        Аргументы:
+            name: название товара
+            description: описание товара
+            price: цена (целая или дробная)
+            quantity: доступное количество
+        """
         self.name = name
         self.description = description
         self.price = price
@@ -15,6 +32,13 @@ class Product:
 
 
 class Category:
+    """Категория товаров.
+
+    Хранит список продуктов и поддерживает два класса-счётчика:
+    `category_count` — общее число созданных категорий,
+    `product_count` — суммарное число продуктов во всех созданных категориях.
+    """
+
     name: str
     description: str
     products: list[Product]
@@ -22,7 +46,14 @@ class Category:
     category_count: ClassVar[int] = 0
     product_count: ClassVar[int] = 0
 
-    def __init__(self, name, description, products) -> None:
+    def __init__(self, name: str, description: str, products: list[Product]) -> None:
+        """Инициализация категории и обновление счётчиков.
+
+        Аргументы:
+            name: название категории
+            description: описание категории
+            products: список объектов `Product` принадлежащих категории
+        """
         self.name = name
         self.description = description
         self.products = products
