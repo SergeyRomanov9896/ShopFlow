@@ -7,13 +7,11 @@ class Product:
     Атрибуты:
         name (str): Название товара.
         description (str): Краткое описание товара.
-        price (int | float): Цена товара (в целых или дробных единицах).
         quantity (int): Количество товара на складе.
     """
 
     name: str
     description: str
-    price: int | float
     quantity: int
 
     def __init__(self, name: str, description: str, price: int | float, quantity: int) -> None:
@@ -31,18 +29,18 @@ class Product:
         self.quantity = quantity
 
     @property
-    def price(self):
+    def price(self) -> int | float:
         return self.__price
 
     @price.setter
-    def price(self, new_price):
+    def price(self, new_price: int | float) -> None:
         if new_price > 0:
             self.__price = new_price
         else:
             print("Цена не должна быть нулевая или отрицательная")
 
     @classmethod
-    def new_product(cls, product_data: dict):
+    def new_product(cls, product_data: dict) -> "Product":
         name = product_data["name"]
         description = product_data["description"]
         price = product_data["price"]
@@ -61,7 +59,6 @@ class Category:
 
     name: str
     description: str
-    products: list[Product]
 
     category_count: ClassVar[int] = 0
     product_count: ClassVar[int] = 0
@@ -88,7 +85,7 @@ class Category:
             result.append(f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.")
         return "\n".join(result)
 
-    def add_product(self, product: Product):
+    def add_product(self, product: Product) -> None:
         if isinstance(product, Product):
             self.__products.append(product)
             Category.product_count += 1
