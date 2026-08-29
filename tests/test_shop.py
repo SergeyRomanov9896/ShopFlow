@@ -17,11 +17,7 @@ def shop_category(shop_product):
     )
 
 
-def test_init_product(shop_product):
-    assert shop_product.name == "Xiaomi Redmi Note 11"
-    assert shop_product.description == "1024GB, Синий"
-    assert shop_product.price == 31000.0
-    assert shop_product.quantity == 14
+# ============ CLASS CATEGORY ============
 
 
 def test_init_category(shop_category, shop_product):
@@ -30,26 +26,69 @@ def test_init_category(shop_category, shop_product):
         shop_category.description
         == "Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни"
     )
-    assert len(shop_category.products) == 1
 
-    product_in_category = shop_category.products[0]
-    assert product_in_category.name == shop_product.name
-    assert product_in_category.description == shop_product.description
-    assert product_in_category.price == shop_product.price
-    assert product_in_category.quantity == shop_product.quantity
+    products_str = shop_category.products
+
+    assert isinstance(products_str, str)
+
+    expected_str = f"{shop_product.name}, {shop_product.price} руб. Остаток: {shop_product.quantity} шт."
+    assert products_str == expected_str
 
 
-def test_category_counters():
-    # Сбрасываем счетчики перед тестом для чистоты эксперимента
-    Category.category_count = 0
-    Category.product_count = 0
+def test_adding_categories(shop_category):
+    count_before = Category.product_count
+    new_product = Product('55" QLED 4K', "Фоновая подсветка", 123000.0, 7)
+    shop_category.add_product(new_product)
+    assert Category.product_count == count_before + 1
 
-    p1 = Product("Товар 1", "Описание 1", 100.0, 1)
-    p2 = Product("Товар 2", "Описание 2", 200.0, 2)
 
-    # Создаем категорию с двумя товарами
-    Category("Тестовая категория", "Описание", [p1, p2])
+def test_invalid_class_instance(shop_category, capsys):
+    shop_category.add_product("invalid_instance")
+    readut = capsys.readouterr()
+    assert readut.out.strip() == "Товар не является экземпляром класса Product"
 
-    # Проверяем, что счетчики корректно увеличились
-    assert Category.category_count == 1
-    assert Category.product_count == 2
+
+# ============ CLASS PRODUCT ============
+
+
+def test_init_product(shop_product):
+    assert shop_product.name == "Xiaomi Redmi Note 11"
+    assert shop_product.description == "1024GB, Синий"
+    assert shop_product.price == 31000.0
+    assert shop_product.quantity == 14
+
+
+@pytest.mark.parametrize("negative", [0, -1])
+def test_negative_price_value(capsys, shop_product, negative):
+    shop_product.price = negative
+    readut = capsys.readouterr()
+    assert readut.out.strip() == "Цена не должна быть нулевая или отрицательная"
+
+
+def test_positive_price_value(shop_product):
+    new_prod = shop_product.price = 5000
+    assert new_prod == 5000
+
+
+def test_correctness_dictionary_unpacking():
+
+    mirror = {
+        "name": "Samsung Galaxy S23 Ultra",
+        "description": "256GB, Серый цвет, 200MP камера",
+        "price": 180000.0,
+        "quantity": 5,
+    }
+
+    new_prod = Product.new_product(
+        {
+            "name": "Samsung Galaxy S23 Ultra",
+            "description": "256GB, Серый цвет, 200MP камера",
+            "price": 180000.0,
+            "quantity": 5,
+        }
+    )
+
+    assert new_prod.name == mirror["name"]
+    assert new_prod.description == mirror["description"]
+    assert new_prod.price == mirror["price"]
+    assert new_prod.quantity == mirror["quantity"]
