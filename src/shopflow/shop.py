@@ -18,10 +18,10 @@ class Product:
         """Инициализирует экземпляр `Product`.
 
         Аргументы:
-            name: название товара
-            description: описание товара
+            name: название товара.
+            description: описание товара.
             price: цена (целая или дробная)
-            quantity: доступное количество
+            quantity: доступное количество.
         """
         self.name = name
         self.description = description
@@ -76,9 +76,9 @@ class Category:
         """Инициализация категории и обновление счётчиков.
 
         Аргументы:
-            name: название категории
-            description: описание категории
-            products: список объектов `Product` принадлежащих категории
+            name: название категории.
+            description: описание категории.
+            products: список объектов `Product` принадлежащих категории.
         """
         self.name = name
         self.description = description
