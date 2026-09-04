@@ -48,10 +48,7 @@ def test_invalid_class_instance(shop_category, capsys):
     assert readut.out.strip() == "Товар не является экземпляром класса Product"
 
     def test_string_representation_categor(shop_category):
-        assert (
-            str(shop_category)
-            == f"{shop_category.description}, количество продуктов: {shop_category.product_count} шт."
-        )
+        assert str(shop_category) == f"{shop_category.name}, количество продуктов: {shop_category.product_count} шт."
 
 
 # ============ CLASS PRODUCT ============
@@ -107,6 +104,5 @@ def test_string_representation_prod(shop_product):
 def test_calculates_the_price_amount():
     prod_1 = Product("Xiaomi Redmi Note 11", "1024GB, Синий", 10, 2)
     prod_2 = Product("Xiaomi Redmi Note 11", "1024GB, Синий", 5, 3)
-    prod_1.__add__(prod_2)
     result = prod_1 + prod_2
     assert result == 35
