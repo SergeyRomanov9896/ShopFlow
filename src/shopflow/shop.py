@@ -57,7 +57,7 @@ class Product:
     def __add__(self, other) -> int | float:
         """Возвращает сумму полных стоимостей двух товаров на складе (цена * количество)."""
         if type(self) is not type(other):
-            raise TypeError
+            raise TypeError("Нельзя сложить объекты разных типов")
         self_total = self.price * self.quantity
         other_total = other.price * other.quantity
         return self_total + other_total
@@ -168,7 +168,7 @@ class LawnGrass(Product):
         self,
         name: str,
         description: str,
-        prise: float,
+        price: float,
         quantity: int,
         country: str,
         germination_period: str,
@@ -179,13 +179,13 @@ class LawnGrass(Product):
         Аргументы:
             name: название товара.
             description: описание газонной травы.
-            prise: цена газонной травы.
+            price: цена газонной травы.
             quantity: доступное количество.
             country: страна происхождения семян.
             germination_period: срок прорастания.
             color: цвет газонной травы.
         """
-        super().__init__(name, description, prise, quantity, color)
+        super().__init__(name, description, price, quantity, color)
         self.country = country
         self.germination_period = germination_period
 
