@@ -112,6 +112,14 @@ class Category:
 
 
 class Smartphone(Product):
+    """Модель смартфона, расширяющая базовые свойства продукта.
+
+    Атрибуты:
+        efficiency (float): Эффективность смартфона.
+        model (str): Модель смартфона.
+        memory (int): Объём памяти в гигабайтах.
+    """
+
     efficiency: float
     model: str
     memory: int
@@ -127,6 +135,18 @@ class Smartphone(Product):
         memory: int,
         color: str,
     ) -> None:
+        """Инициализирует смартфон.
+
+        Аргументы:
+            name: название товара.
+            description: описание смартфона.
+            price: цена смартфона.
+            quantity: доступное количество.
+            efficiency: эффективность смартфона.
+            model: модель смартфона.
+            memory: объём памяти в гигабайтах.
+            color: цвет смартфона.
+        """
         super().__init__(name, description, price, quantity, color)
         self.efficiency = efficiency
         self.model = model
@@ -134,6 +154,13 @@ class Smartphone(Product):
 
 
 class LawnGrass(Product):
+    """Модель газонной травы, расширяющая базовые свойства продукта.
+
+    Атрибуты:
+        country (str): Страна происхождения семян.
+        germination_period (str): Срок прорастания.
+    """
+
     country: str
     germination_period: str
 
@@ -147,6 +174,17 @@ class LawnGrass(Product):
         germination_period: str,
         color: str,
     ) -> None:
+        """Инициализирует газонную траву.
+
+        Аргументы:
+            name: название товара.
+            description: описание газонной травы.
+            prise: цена газонной травы.
+            quantity: доступное количество.
+            country: страна происхождения семян.
+            germination_period: срок прорастания.
+            color: цвет газонной травы.
+        """
         super().__init__(name, description, prise, quantity, color)
         self.country = country
         self.germination_period = germination_period
