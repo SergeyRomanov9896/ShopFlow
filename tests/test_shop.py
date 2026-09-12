@@ -1,21 +1,9 @@
 import pytest
 
-from src.shopflow.shop import Category, LawnGrass, Product, Smartphone
-
-
-@pytest.fixture()
-def shop_product():
-    return Product("Xiaomi Redmi Note 11", "1024GB, Синий", 31000.0, 14, "Синий")
-
-
-@pytest.fixture()
-def shop_category(shop_product):
-    return Category(
-        "Смартфоны",
-        """Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни""",
-        [shop_product],
-    )
-
+from src.shopflow.shop import (
+    Category,
+    Product,
+)
 
 # ============ CLASS CATEGORY ============
 
@@ -37,17 +25,28 @@ def test_init_category(shop_category, shop_product):
 
 def test_adding_categories(shop_category):
     count_before = Category.product_count
-    new_product = Product('55" QLED 4K', "Фоновая подсветка", 123000.0, 7, "Черный")
+    new_product = Product(
+        '55" QLED 4K',
+        "Фоновая подсветка",
+        123000.0,
+        7,
+        "Черный",
+    )
     shop_category.add_product(new_product)
     assert Category.product_count == count_before + 1
 
 
 def test_invalid_class_instance(shop_category):
-    with pytest.raises(TypeError, match="Товар не является экземпляром класса Product"):
+    with pytest.raises(
+        TypeError,
+        match="Товар не является экземпляром класса Product",
+    ):
         shop_category.add_product("invalid_instance")
 
 
-def test_string_representation_category(shop_category):
+def test_string_representation_category(
+    shop_category,
+):
     assert str(shop_category) == f"{shop_category.name}, количество продуктов: 14 шт."
 
 
@@ -106,32 +105,43 @@ def test_string_representation_prod(shop_product):
 
 
 def test_calculates_the_price_amount():
-    prod_1 = Product("Xiaomi Redmi Note 11", "1024GB, Синий", 10, 2, "Синий")
-    prod_2 = Product("Xiaomi Redmi Note 11", "1024GB, Синий", 5, 3, "Синий")
+    prod_1 = Product(
+        "Xiaomi Redmi Note 11",
+        "1024GB, Синий",
+        10,
+        2,
+        "Синий",
+    )
+    prod_2 = Product(
+        "Xiaomi Redmi Note 11",
+        "1024GB, Синий",
+        5,
+        3,
+        "Синий",
+    )
     result = prod_1 + prod_2
     assert result == 35
 
 
-def test_cannot_add_products_of_different_types():
-    product = Product("Товар", "Описание", 10, 2, "Черный")
-    grass = LawnGrass("Трава", "Описание", 5, 3, "Россия", "7 дней", "Зеленый")
-
+def test_cannot_add_products_of_different_types(shop_product, shop_laws):
     with pytest.raises(TypeError):
-        product + grass
+        assert shop_product + shop_laws
 
 
-def test_smartphone_initialization():
-    smartphone = Smartphone("Телефон", "Описание", 1000.0, 2, 95.5, "Model X", 256, "Черный")
-
-    assert smartphone.efficiency == 95.5
-    assert smartphone.model == "Model X"
-    assert smartphone.memory == 256
-    assert smartphone.color == "Черный"
+# ============ CLASS SMARTPHONE ============
 
 
-def test_lawn_grass_initialization():
-    grass = LawnGrass("Трава", "Описание", 500.0, 20, "Россия", "7 дней", "Зеленый")
+def test_smartphone_initialization(shop_smart):
+    assert shop_smart.efficiency == 95.5
+    assert shop_smart.model == "Model X"
+    assert shop_smart.memory == 256
+    assert shop_smart.color == "Черный"
 
-    assert grass.country == "Россия"
-    assert grass.germination_period == "7 дней"
-    assert grass.color == "Зеленый"
+
+# ============ CLASS LAWNGRASS ============
+
+
+def test_lawn_grass_initialization(shop_laws):
+    assert shop_laws.country == "Россия"
+    assert shop_laws.germination_period == "7 дней"
+    assert shop_laws.color == "Зеленый"

@@ -12,10 +12,11 @@ class Product:
 
     name: str
     description: str
+    __price: int | float
     quantity: int
     color: str
 
-    def __init__(self, name: str, description: str, price: int | float, quantity: int, color: str) -> None:
+    def __init__(self, name, description, price, quantity, color) -> None:
         """Инициализирует экземпляр `Product`.
 
         Аргументы:
@@ -73,11 +74,12 @@ class Category:
 
     name: str
     description: str
+    __products: list[Product]
 
     category_count: ClassVar[int] = 0
     product_count: ClassVar[int] = 0
 
-    def __init__(self, name: str, description: str, products: list[Product]) -> None:
+    def __init__(self, name, description, products) -> None:
         """Инициализация категории и обновление счётчиков.
 
         Аргументы:

@@ -38,29 +38,10 @@ line-length = 119
 
 # Исключаем из проверки определенные папки
 exclude = [
-    ".bzr",
-    ".direnv",
-    ".eggs",
-    ".git",
-    ".git-rewrite",
-    ".hg",
-    ".mypy_cache",
-    ".nox",
-    ".pants.d",
-    ".pytype",
-    ".ruff_cache",
-    ".svn",
-    ".tox",
-    ".venv",
-    "__pypackages__",
-	"__pycache__",
-    "_build",
-    "buck-out",
-    "build",
-    "dist",
-    "node_modules",
-    "venv",
-    "migrations",  # Часто миграции Django/SQLAlchemy не линтят
+    ".bzr", ".direnv", ".eggs", ".git", ".git-rewrite", ".hg", ".mypy_cache",
+    ".nox", ".pants.d", ".pytype", ".ruff_cache", ".svn", ".tox", ".venv",
+    "__pypackages__", "__pycache__", "_build", "buck-out", "build", "dist",
+    "node_modules", "venv", "migrations"
 ]
 
 # === 📋 RUFF: Правила линтинга ===
@@ -117,3 +98,12 @@ warn_return_any = true
 exclude = ["venv", "__pycache__"]
 mypy_path = "src" # Путь к папке с локальными модулями для импортов
 explicit_package_bases = true # Позволяет запускать mypy для папки src/ без конфликтов имён модулей
+
+# === 🧪 PYTEST: Настройки тестирования ===
+[tool.pytest.ini_options]
+# Указываем pytest, что корень проекта — это главная папка для импортов
+# Без этой строки тесты не смогут импортировать модули из папки src/
+pythonpath = ["."]
+
+# Указываем pytest, где искать тесты (папка tests в корне проекта)
+testpaths = ["tests"]
