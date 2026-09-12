@@ -1,6 +1,6 @@
 import pytest
 
-from src.shopflow.shop import (
+from shopflow.shop import (
     Category,
     Product,
 )
