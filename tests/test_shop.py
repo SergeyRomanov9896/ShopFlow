@@ -63,6 +63,7 @@ def test_init_product(shop_product):
 
 @pytest.mark.parametrize("negative", [0, -1])
 def test_negative_price_value(capsys, shop_product, negative):
+    capsys.readouterr()
     shop_product.price = negative
     readut = capsys.readouterr()
     assert readut.out.strip() == "Цена не должна быть нулевая или отрицательная"
@@ -145,3 +146,18 @@ def test_lawn_grass_initialization(shop_laws):
     assert shop_laws.country == "Россия"
     assert shop_laws.germination_period == "7 дней"
     assert shop_laws.color == "Зеленый"
+
+
+# ============ CLASS MIXIN ============
+
+
+def test_mixin_prints_creation_info(capsys, shop_product):
+    captured = capsys.readouterr()
+
+    expected = "Product('Xiaomi Redmi Note 11', '1024GB, Синий', 31000.0, 14, 'Синий')\n"
+
+    assert captured.out == expected
+
+    assert shop_product.name == "Xiaomi Redmi Note 11"
+    assert shop_product.price == 31000.0
+    assert shop_product.color == "Синий"
