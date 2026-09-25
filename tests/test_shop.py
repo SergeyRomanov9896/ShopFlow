@@ -50,6 +50,11 @@ def test_string_representation_category(
     assert str(shop_category) == f"{shop_category.name}, количество продуктов: 14 шт."
 
 
+def test_empty_product_list():
+    category_empty = Category("Пустая категория", "Категория без продуктов", [])
+    assert category_empty.middle_price() == 0
+
+
 # ============ CLASS PRODUCT ============
 
 
@@ -127,6 +132,18 @@ def test_calculates_the_price_amount():
 def test_cannot_add_products_of_different_types(shop_product, shop_laws):
     with pytest.raises(TypeError):
         assert shop_product + shop_laws
+
+
+def test_creating_product_with_zero_quantity():
+
+    with pytest.raises(ValueError, match="Товар с нулевым количеством не может быть добавлен"):
+        Product(
+            "Xiaomi Redmi Note 11",
+            "1024GB",
+            31000.0,
+            0,
+            "Синий",
+        )
 
 
 # ============ CLASS SMARTPHONE ============
