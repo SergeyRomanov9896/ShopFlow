@@ -38,6 +38,8 @@ class BaseProduct(ABC):
         color: str = "Белый",
     ) -> None:
         """Инициализирует общие атрибуты продукта."""
+        if quantity == 0:
+            raise ValueError("Товар с нулевым количеством не может быть добавлен")
         self.name = name
         self.description = description
         self.price = price
@@ -141,6 +143,7 @@ class Category:
 
         for product in self.__products:
             result.append(f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.")
+
         return "\n".join(result)
 
     def add_product(self, product: Product) -> None:
@@ -149,6 +152,20 @@ class Category:
             Category.product_count += 1
         else:
             raise TypeError("Товар не является экземпляром класса Product")
+
+    def middle_price(self):
+        """Подсчитывает средний ценник всех товаров"""
+
+        try:
+            total_sum = 0
+
+            for product in self.__products:
+                total_sum += product.price
+
+            avg = round(total_sum / len(self.__products), 1)
+            return avg
+        except ZeroDivisionError:
+            return 0
 
 
 class Smartphone(Product):
